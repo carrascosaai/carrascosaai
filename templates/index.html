@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrascosa AI Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="hero">
+        <h1>✈️ Carrascosa AI Flights</h1>
+        <p>Busca, compara y vuela al mejor precio</p>
+        <form id="searchForm">
+            <input type="text" name="origin" placeholder="Origen" required>
+            <input type="text" name="destination" placeholder="Destino" required>
+            <input type="date" name="date" required>
+            <button type="submit">Buscar vuelos</button>
+        </form>
+        <div id="results"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
