@@ -1,28 +1,27 @@
+ 
 from flask import Flask, render_template, request, jsonify
-import random
+from datetime import datetime
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+search_history = []
 
-@app.route('/search', methods=['POST'])
+@app.route("/")
+def home():
+    return render_template("index.html", history=search_history)
+
+@app.route("/search", methods=["POST"])
 def search():
-    origin = request.form.get('origin')
-    destination = request.form.get('destination')
-    date = request.form.get('date')
+    data = request.get_json()
+    query = data.get("query")
 
-    fake_flights = [
-        {"airline": "Ryanair", "price": f"{random.randint(25, 120)} €", "time": "07:00 - 09:00"},
-        {"airline": "Vueling", "price": f"{random.randint(40, 150)} €", "time": "09:30 - 11:45"},
-        {"airline": "EasyJet", "price": f"{random.randint(30, 130)} €", "time": "12:15 - 14:25"},
-        {"airline": "Iberia", "price": f"{random.randint(60, 200)} €", "time": "15:00 - 17:15"}
-    ]
+    # Guardar búsqueda
+    timestamp = datetime.now().strftime("%d/%m/%Y %H:%M")
+    search_history.insert(0, {"query": query, "time": timestamp})
 
-    return jsonify(fake_flights)
+    # Simulación (cuando conectes API Skyscanner/Kiwi aquí van los resultados reales)
+    response = f"✈️ Resultados simulados para '{query}'. (Pronto conectaremos con Skyscanner y Kiwi)"
+    return jsonify({"response": response})
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
-
-

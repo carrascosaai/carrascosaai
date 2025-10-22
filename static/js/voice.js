@@ -1,17 +1,12 @@
-const startVoice = () => {
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = 'es-ES';
+// Reconocimiento de voz básico
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+
+recognition.onresult = function(event) {
+    const texto = event.results[0][0].transcript;
+    document.getElementById('destino').value = texto;
+};
+
+function empezarVoz() {
     recognition.start();
-
-    recognition.onresult = function(event) {
-        const text = event.results[0][0].transcript.toLowerCase();
-        document.getElementById('searchInput').value = text;
-        document.getElementById('searchForm').submit();
-    }
-};
-
-const speak = (text) => {
-    const synth = window.speechSynthesis;
-    const utter = new SpeechSynthesisUtterance(text);
-    synth.speak(utter);
-};
+}
